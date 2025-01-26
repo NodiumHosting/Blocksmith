@@ -4,7 +4,7 @@ import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
 
-public class BlockSmithBlockItem {
+public class BlocksmithBlockItem {
     public static ItemStack of(BlocksmithBlockType blockSmithBlockType, BlocksmithBlockTypeRegistry blockSmithBlockTypeRegistry, Material material, int customModelData) {
         String blockSmithBlockTypeName = blockSmithBlockTypeRegistry.getName(blockSmithBlockType);
         if (blockSmithBlockTypeName == null) {
