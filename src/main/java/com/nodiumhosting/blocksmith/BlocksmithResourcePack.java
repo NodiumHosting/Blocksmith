@@ -16,7 +16,7 @@ public class BlocksmithResourcePack {
 
     public final ResourcePack resourcePack = ResourcePack.resourcePack();
 
-    public BlocksmithResourcePack() {
+    BlocksmithResourcePack() {
         resourcePack.packMeta(PackFormat.format(42), Component.text("Blocksmith Custom Server Resources"));
         resourcePack.icon(ICON);
     }
