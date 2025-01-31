@@ -11,7 +11,8 @@ public class BItemTypeRegistry extends Registry<BItemType, BItemTypeData> {
         if (this.isRegistered(id)) {
             return null;
         }
-        return registry.put(id, itemType);
+        registry.put(id, itemType);
+        return itemType;
     }
 
     public @Nullable BItemType get(Identifier id) {

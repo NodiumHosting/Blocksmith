@@ -15,7 +15,7 @@ public class Identifier {
     }
 
     @Nullable
-    public Identifier of(String id) {
+    public static Identifier of(String id) {
         String[] split = id.split(":");
         if (split.length == 2) {
             return new Identifier(split[0], split[1]);

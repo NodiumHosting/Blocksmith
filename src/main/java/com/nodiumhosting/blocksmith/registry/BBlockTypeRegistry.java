@@ -11,7 +11,8 @@ public class BBlockTypeRegistry extends Registry<BBlockType, BBlockTypeData> {
         if (this.isRegistered(id)) {
             return null;
         }
-        return registry.put(id, blockType);
+        registry.put(id, blockType);
+        return blockType;
     }
 
     public @Nullable BBlockType get(Identifier id) {
