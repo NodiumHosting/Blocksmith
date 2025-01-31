@@ -1,5 +1,6 @@
 package com.nodiumhosting.blocksmith;
 
+import lombok.Getter;
 import net.kyori.adventure.resource.ResourcePackInfo;
 import net.kyori.adventure.text.Component;
 import team.unnamed.creative.BuiltResourcePack;
@@ -12,17 +13,21 @@ import java.net.URI;
 import java.util.UUID;
 
 public class BlocksmithResourcePack {
-    private static final Writable ICON = Writable.resource(Blocksmith.class.getClassLoader(), "blocksmith_icon.png");;
+    private static final Writable ICON = Writable.resource(Blocksmith.class.getClassLoader(), "blocksmith_icon.png");
 
+    @Getter
+    private final UUID uuid;
     public final ResourcePack resourcePack = ResourcePack.resourcePack();
 
-    BlocksmithResourcePack() {
+    BlocksmithResourcePack(UUID uuid) {
+        this.uuid = uuid;
+
         resourcePack.packMeta(PackFormat.format(42), Component.text("Blocksmith Custom Server Resources"));
         resourcePack.icon(ICON);
     }
 
-    public static ResourcePackInfo getPackInfo(UUID uuid, BuiltResourcePack builtResourcePack, URI rpServer) {
-        return ResourcePackInfo.resourcePackInfo(uuid, rpServer, builtResourcePack.hash());
+    public ResourcePackInfo getPackInfo(URI rpServer) {
+        return ResourcePackInfo.resourcePackInfo(uuid, rpServer, build().hash());
     }
 
     public BuiltResourcePack build() {
