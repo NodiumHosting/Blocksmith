@@ -16,8 +16,16 @@ public class BBlock {
     public Block getBlock() {
         return blockType.getData().getBaseBlock()
                 .withTag(
-                        Tag.String(Tags.Block.TYPE.getIdentifier().toString()),
+                        Tag.String(Tags.Block.TYPE.getTagId()),
                         blockType.id.toString()
+                )
+                .withTag(
+                        Tag.Integer(Tags.Block.REQUIRED_TOOL_TIER.getTagId()),
+                        blockType.getData().getRequiredToolTier()
+                )
+                .withTag(
+                        Tag.Integer(Tags.Block.HARDNESS.getTagId()),
+                        blockType.getData().getHardness()
                 );
     }
 }

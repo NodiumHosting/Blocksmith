@@ -5,23 +5,27 @@ import lombok.Getter;
 public class Tags {
     @Getter
     public enum Block {
-        TYPE(new Identifier("blocksmith", "block_type"));
+        TYPE(new Identifier("blocksmith", "block_type").toString()),
+        REQUIRED_TOOL_TIER(new Identifier("blocksmith", "required_tool_tier").toString()),
+        HARDNESS(new Identifier("blocksmith", "hardness").toString());
 
-        private final Identifier identifier;
+        private final String tagId;
 
-        Block(Identifier identifier) {
-            this.identifier = identifier;
+        Block(String tagId) {
+            this.tagId = tagId;
         }
     }
 
     @Getter
     public enum Item {
-        TYPE(new Identifier("blocksmith", "item_type"));
+        TYPE(new Identifier("blocksmith", "item_type").toString()),
+        TOOL_TIER(new Identifier("blocksmith", "tool_tier").toString()),
+        MINING_SPEED(new Identifier("blocksmith", "mining_speed").toString());
 
-        private final Identifier identifier;
+        private final String tagId;
 
-        Item(Identifier identifier) {
-            this.identifier = identifier;
+        Item(String tagId) {
+            this.tagId = tagId;
         }
     }
 }
