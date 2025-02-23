@@ -1,0 +1,7 @@
+[book]
+title = "Blocksmith Usage Documentation"
+
+[output.html]
+git-repository-url = "https://github.com/NodiumHosting/Blocksmith"
+git-repository-icon = "fa-github"
+edit-url-template = "https://github.com/NodiumHosting/Blocksmith/edit/docs/{path}"
