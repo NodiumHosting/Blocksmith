@@ -63,6 +63,10 @@ public class Registry<T extends IRegistryEntry> {
                     }
                     String json = sb.toString();
                     T entry = Registries.gson.fromJson(json, type);
+                    if (!entry.isValid()) {
+                        catchException(fileOrDir.getName());
+                        return;
+                    }
                     this.register(entry);
                 } catch (Exception e) {
                     catchException(fileOrDir.getName());
