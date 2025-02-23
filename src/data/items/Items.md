@@ -3,7 +3,7 @@
 Data format of Blocksmith items.
 
 # Format
-- `nid` - The [NID](../../NID.md) of the item
+- `id` - The [NID](../../NID.md) of the item
 - `translation?` - The translation key for the item's name, defaults to `item.<namespace>.<id>`
 - `material` - The [NID](../../NID.md) of the vanilla item to use as the item base
 - `model?` - The [NID](../../NID.md) of the [Model](../../assets/models/Models.md) to use
@@ -14,12 +14,12 @@ Data format of Blocksmith items.
 # Example
 ```
 {
-  "nid": "blocksmith:leaping_orb",
+  "id": "blocksmith:leaping_orb",
   "material": "minecraft:slime_ball",
   "model": "blocksmith:item/leaping_orb",
   "components": [
     {
-      "nid": "blocksmith:rarity",
+      "id": "blocksmith:rarity",
       "rarity": "uncommon"
     }
   ],
