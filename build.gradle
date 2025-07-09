@@ -31,7 +31,7 @@ java {
 tasks {
     jar {
         manifest {
-            attributes["Main-Class"] = "com.nodiumhosting.blocksmith.Blocksmith"
+            attributes["Main-Class"] = "com.nodiumhosting.blocksmith.TestServer"
         }
     }
 
