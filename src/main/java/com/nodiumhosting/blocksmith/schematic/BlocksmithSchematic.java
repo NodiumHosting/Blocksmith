@@ -101,7 +101,9 @@ public class BlocksmithSchematic implements ISchematic {
 
 		ListBinaryTag.Builder<BinaryTag> paletteTagBuilder = ListBinaryTag.builder();
 		this.palette.forEach((id, block) -> {
-			paletteTagBuilder.add(ISchematic.blockToNBT(block));
+			CompoundBinaryTag tag = ISchematic.blockToNBT(block);
+			if (tag == null) { return; }
+			paletteTagBuilder.add(tag);
 		});
 		ListBinaryTag paletteTag = paletteTagBuilder.build();
 

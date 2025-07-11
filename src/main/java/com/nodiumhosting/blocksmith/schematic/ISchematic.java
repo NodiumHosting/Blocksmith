@@ -20,6 +20,7 @@ public interface ISchematic {
 	}
 
 	static CompoundBinaryTag blockToNBT(Block block) {
+		if (block == null) { return null; }
 		Map<String, StringBinaryTag> properties = new HashMap<>();
 		block.properties().forEach((id, value) -> {
 			properties.put(id, StringBinaryTag.stringBinaryTag(value));
