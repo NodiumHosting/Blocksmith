@@ -1,5 +1,6 @@
 package com.nodiumhosting.blocksmith.item;
 
+import com.nodiumhosting.blocksmith.text.StyledComponent;
 import net.kyori.adventure.text.Component;
 import net.minestom.server.component.DataComponent;
 import net.minestom.server.component.DataComponentMap;
@@ -12,12 +13,13 @@ import java.util.stream.Stream;
 
 public class Item {
     public final Tag<String> BLOCKSMITH_ITEM_ID = Tag.String("blocksmith_item_id");
+    public final Tag<String> BLOCKSMITH_ITEM_RARITY_RAW = Tag.String("blocksmith_item_rarity_raw");
     public final Tag<Component> BLOCKSMITH_ITEM_RARITY = Tag.Component("blocksmith_item_rarity");
 
     private final String id;
     private final Material material;
     private final String name;
-    private final Component rarity;
+    private final StyledComponent rarity;
     private final String itemModel;
     private final List<Component> lore;
     private final DataComponentMap.PatchBuilder dataComponents;
@@ -36,9 +38,10 @@ public class Item {
         ItemStack.Builder builder = ItemStack.of(this.material, this.dataComponents.build()).builder();
 
         builder.setTag(BLOCKSMITH_ITEM_ID, id);
-        builder.setTag(BLOCKSMITH_ITEM_RARITY, rarity);
+        builder.setTag(BLOCKSMITH_ITEM_RARITY_RAW, rarity.getText());
+        builder.setTag(BLOCKSMITH_ITEM_RARITY, rarity.component());
 
-        builder.customName(Component.text(this.name, this.rarity.color()));
+        builder.customName(Component.text(this.name, this.rarity.getStyle().color()));
 
         if (!this.itemModel.isEmpty()) {
             builder.itemModel(this.itemModel);
@@ -46,9 +49,9 @@ public class Item {
 
         builder.lore(
                 this.lore.isEmpty()
-                        ? List.of(this.rarity)
+                        ? List.of(this.rarity.component())
                         // add an empty line between lore and rarity
-                        : Stream.concat(this.lore.stream(), Stream.of(Component.empty(), this.rarity)).toList()
+                        : Stream.concat(this.lore.stream(), Stream.of(Component.empty(), this.rarity.component())).toList()
         );
 
         return builder.build();
@@ -58,7 +61,7 @@ public class Item {
         private String id = "";
         private Material material = Material.DIRT;
         private String name = "";
-        private Component rarity = Component.empty();
+        private StyledComponent rarity = StyledComponent.empty();
         private String itemModel = "";
         private List<Component> lore = List.of();
         private final DataComponentMap.PatchBuilder dataComponents = DataComponentMap.patchBuilder();
@@ -78,7 +81,7 @@ public class Item {
             return this;
         }
 
-        public Builder rarity(Component rarity) {
+        public Builder rarity(StyledComponent rarity) {
             this.rarity = rarity;
             return this;
         }
