@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import net.kyori.adventure.text.Component;
 import net.kyori.adventure.text.format.Style;
+import net.kyori.adventure.text.format.TextColor;
 
 import java.util.List;
 
@@ -25,6 +26,10 @@ public record StyledComponent(@Getter @NonNull String text,
         String formattedText = textFormatters.stream()
                 .reduce(text, (t, formatter) -> formatter.format(t), (t1, t2) -> t1);
         return Component.text(formattedText, style);
+    }
+
+    public Component componentWithColor(TextColor color) {
+        return Component.empty().color(color).append(component());
     }
 
     public static StyledComponent empty() {
