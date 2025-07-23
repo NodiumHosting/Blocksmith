@@ -1,7 +1,9 @@
 package com.nodiumhosting.blocksmith.item;
 
+import com.nodiumhosting.blocksmith.text.ComponentStyler;
 import com.nodiumhosting.blocksmith.text.StyledComponent;
 import net.kyori.adventure.text.Component;
+import net.kyori.adventure.text.format.Style;
 import net.minestom.server.component.DataComponent;
 import net.minestom.server.component.DataComponentMap;
 import net.minestom.server.item.ItemStack;
@@ -18,7 +20,7 @@ public class Item {
 
     private final String id;
     private final Material material;
-    private final String name;
+    private final StyledComponent name;
     private final StyledComponent rarity;
     private final String itemModel;
     private final List<Component> lore;
@@ -41,7 +43,7 @@ public class Item {
         builder.setTag(BLOCKSMITH_ITEM_RARITY_RAW, rarity.getText());
         builder.setTag(BLOCKSMITH_ITEM_RARITY, rarity.component());
 
-        builder.customName(Component.text(this.name, this.rarity.getStyle().color()));
+        builder.customName(ComponentStyler.prependReset(this.name.componentWithColor(this.rarity.getStyle().color())));
 
         if (!this.itemModel.isEmpty()) {
             builder.itemModel(this.itemModel);
@@ -64,7 +66,7 @@ public class Item {
     public static class Builder {
         private String id = "";
         private Material material = Material.DIRT;
-        private String name = "";
+        private StyledComponent name = StyledComponent.empty();
         private StyledComponent rarity = StyledComponent.empty();
         private String itemModel = "";
         private List<Component> lore = List.of();
@@ -80,7 +82,7 @@ public class Item {
             return this;
         }
 
-        public Builder name(String name) {
+        public Builder name(StyledComponent name) {
             this.name = name;
             return this;
         }
