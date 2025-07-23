@@ -34,8 +34,8 @@ public class Item {
         this.dataComponents = builder.dataComponents;
     }
 
-    public ItemStack itemStack() {
-        ItemStack.Builder builder = ItemStack.of(this.material, this.dataComponents.build()).builder();
+    public ItemStack createStack(int amount) {
+        ItemStack.Builder builder = ItemStack.of(this.material, amount, this.dataComponents.build()).builder();
 
         builder.setTag(BLOCKSMITH_ITEM_ID, id);
         builder.setTag(BLOCKSMITH_ITEM_RARITY_RAW, rarity.getText());
@@ -55,6 +55,10 @@ public class Item {
         );
 
         return builder.build();
+    }
+
+    public ItemStack createStack() {
+        return createStack(1);
     }
 
     public static class Builder {
