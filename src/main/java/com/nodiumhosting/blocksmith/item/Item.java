@@ -49,12 +49,14 @@ public class Item {
             builder.itemModel(this.itemModel);
         }
 
-        builder.lore(
-                this.lore.isEmpty()
-                        ? List.of(this.rarity.component())
-                        // add an empty line between lore and rarity
-                        : Stream.concat(this.lore.stream(), Stream.of(Component.empty(), this.rarity.component())).toList()
-        );
+        List<Component> rawLore = this.lore.isEmpty()
+                ? List.of(this.rarity.component())
+                // add an empty line between lore and rarity
+                : Stream.concat(this.lore.stream(), Stream.of(Component.empty(), this.rarity.component())).toList();
+
+        List<Component> lore = rawLore.stream().map(ComponentStyler::prependReset).toList();
+
+        builder.lore(lore);
 
         return builder.build();
     }
