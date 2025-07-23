@@ -2,23 +2,25 @@ package com.nodiumhosting.blocksmith.item;
 
 import com.nodiumhosting.blocksmith.text.ComponentStyler;
 import com.nodiumhosting.blocksmith.text.StyledComponent;
+import net.kyori.adventure.key.Key;
 import net.kyori.adventure.text.Component;
-import net.kyori.adventure.text.format.Style;
 import net.minestom.server.component.DataComponent;
 import net.minestom.server.component.DataComponentMap;
 import net.minestom.server.item.ItemStack;
 import net.minestom.server.item.Material;
 import net.minestom.server.tag.Tag;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 import java.util.stream.Stream;
 
 public class Item {
-    public final Tag<String> BLOCKSMITH_ITEM_ID = Tag.String("blocksmith_item_id");
-    public final Tag<String> BLOCKSMITH_ITEM_RARITY_RAW = Tag.String("blocksmith_item_rarity_raw");
-    public final Tag<Component> BLOCKSMITH_ITEM_RARITY = Tag.Component("blocksmith_item_rarity");
+    public static final Tag<String> BLOCKSMITH_ITEM_ID_RAW_TAG = Tag.String("blocksmith_item_id");
+    public static final Tag<Key> BLOCKSMITH_ITEM_ID_TAG = BLOCKSMITH_ITEM_ID_RAW_TAG.map(Key::key, Key::asString);
+    public static final Tag<String> BLOCKSMITH_ITEM_RARITY_RAW_TAG = Tag.String("blocksmith_item_rarity_raw");
+    public static final Tag<Component> BLOCKSMITH_ITEM_RARITY_TAG = Tag.Component("blocksmith_item_rarity");
 
-    private final String id;
+    private final Key id;
     private final Material material;
     private final StyledComponent name;
     private final StyledComponent rarity;
@@ -39,9 +41,9 @@ public class Item {
     public ItemStack createStack(int amount) {
         ItemStack.Builder builder = ItemStack.of(this.material, amount, this.dataComponents.build()).builder();
 
-        builder.setTag(BLOCKSMITH_ITEM_ID, id);
-        builder.setTag(BLOCKSMITH_ITEM_RARITY_RAW, rarity.getText());
-        builder.setTag(BLOCKSMITH_ITEM_RARITY, rarity.component());
+        builder.setTag(BLOCKSMITH_ITEM_ID_RAW_TAG, id.asString());
+        builder.setTag(BLOCKSMITH_ITEM_RARITY_RAW_TAG, rarity.getText());
+        builder.setTag(BLOCKSMITH_ITEM_RARITY_TAG, rarity.component());
 
         builder.customName(ComponentStyler.prependReset(this.name.componentWithColor(this.rarity.getStyle().color())));
 
@@ -65,8 +67,13 @@ public class Item {
         return createStack(1);
     }
 
+    public static @Nullable Key readItemId(ItemStack itemStack) {
+        if (!itemStack.hasTag(BLOCKSMITH_ITEM_ID_RAW_TAG) || !itemStack.hasTag(BLOCKSMITH_ITEM_ID_TAG)) return null;
+        return itemStack.getTag(BLOCKSMITH_ITEM_ID_TAG);
+    }
+
     public static class Builder {
-        private String id = "";
+        private Key id = Key.key("unknown:unknown");
         private Material material = Material.DIRT;
         private StyledComponent name = StyledComponent.empty();
         private StyledComponent rarity = StyledComponent.empty();
@@ -74,7 +81,7 @@ public class Item {
         private List<Component> lore = List.of();
         private final DataComponentMap.PatchBuilder dataComponents = DataComponentMap.patchBuilder();
 
-        public Builder id(String id) {
+        public Builder id(Key id) {
             this.id = id;
             return this;
         }
